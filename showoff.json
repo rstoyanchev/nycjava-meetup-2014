@@ -1,0 +1,11 @@
+{
+  "name": "WebSocket Applications with Spring Framework 4.0",
+  "description": "WebSocket Applications with Spring Framework 4.0",
+  "sections": [
+    {"section":"intro"},
+    {"section":"java"},
+    {"section":"spring"},
+    {"section":"messaging"},
+    {"section":"end"}
+  ]
+}
