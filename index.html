@@ -1,0 +1,698 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>WebSocket Applications with Spring Framework 4.0</title>
+
+  <meta name="viewport" content="width=device-width"/>
+
+  <link rel="stylesheet" href="./css/reset.css" type="text/css"/>
+  <link rel="stylesheet" href="./css/showoff.css" type="text/css"/>
+
+  <script type="text/javascript" src="./js/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript" src="./js/jquery.cycle.all.js"></script>
+	<script type="text/javascript" src="./js/jquery-print.js"></script>
+  <script type="text/javascript" src="./js/jquery.batchImageLoad.js"></script>
+
+  <script type="text/javascript" src="./js/jquery.doubletap-0.1.js"></script>
+
+  <script type="text/javascript" src="./js/fg.menu.js"></script>
+  <script type="text/javascript" src="./js/showoff.js"></script>
+  <script type="text/javascript" src="./js/jTypeWriter.js"> </script>
+  <script type="text/javascript" src="./js/sh_main.min.js"></script>
+  <script type="text/javascript" src="./js/core.js"></script>
+  <script type="text/javascript" src="./js/showoffcore.js"></script>
+  <script type="text/javascript" src="./js/coffee-script.js"></script>
+
+  <link type="text/css" href="./css/fg.menu.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href="./css/theme/ui.all.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href="./css/sh_style.css" rel="stylesheet" >
+
+  
+    <link rel="stylesheet" href="file/showoff.css" type="text/css"/>
+  
+
+  
+
+  <script type="text/javascript">
+  $(function(){
+      setupPreso(false, './');
+  });
+  </script>
+
+</head>
+
+<body>
+
+<a tabindex="0" href="#search-engines" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="navmenu"><span class="ui-icon ui-icon-triangle-1-s"></span>slides</a>
+<div id="navigation" class="hidden"></div>
+
+<div id="help">
+  <table>
+    <tr><td class="key">z, ?</td><td>toggle help (this)</td></tr>
+    <tr><td class="key">space, &rarr;</td><td>next slide</td></tr>
+    <tr><td class="key">shift-space, &larr;</td><td>previous slide</td></tr>
+    <tr><td class="key">d</td><td>toggle debug mode</td></tr>
+    <tr><td class="key">## &lt;ret&gt;</td><td>go to slide #</td></tr>
+    <tr><td class="key">c, t</td><td>table of contents (vi)</td></tr>
+    <tr><td class="key">f</td><td>toggle footer</td></tr>
+    <tr><td class="key">r</td><td>reload slides</td></tr>
+    <tr><td class="key">n</td><td>toggle notes</td></tr>
+    <tr><td class="key">p</td><td>run preshow</td></tr>
+  </table>
+</div>
+
+<div class="buttonNav">
+  <input type="submit" onClick="prevStep();" value="prev"/>
+  <input type="submit" onClick="nextStep();" value="next"/>
+</div>
+
+<div id="preso">loading presentation...</div>
+<div id="footer">
+  <span id="slideInfo"></span>
+  <span id="debugInfo"></span>
+  <span id="notesInfo"></span>
+</div>
+
+<div id="slides" class="offscreen" style="display:none;">
+<div class="slide" data-transition="none"><div class="content subsection" ref="intro/slides/1">
+<h1>WebSocket Apps<br>in Java and Spring</br>
+
+<h2>Rossen Stoyanchev</h2>
+
+<h2><a href="https://twitter.com/rstoya05">@rstoya05</a></h2>
+</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small center" ref="intro/slides/2">
+<h1>What is WebSocket?</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small center" ref="intro/slides/3">
+<h1>Sockets have been around</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small center" ref="intro/slides/4">
+<h1>Longer than our careers</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small center" ref="intro/slides/5">
+<h1><code>java.net.Socket</code></h1>
+
+<br>
+
+
+<h1><code>@since JDK 1.0</code></h1>
+</br>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small center" ref="intro/slides/6">
+<h1>What is a <strong>"Web"</strong>Socket?</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small center" ref="intro/slides/7">
+<h1>Have you ever had to</h1>
+
+<h1>display "live" data?</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small center" ref="intro/slides/8">
+<h1>... in a browser</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small center" ref="intro/slides/9">
+<h1>Uses cases range</h1>
+
+<br>
+
+
+<h2>Simple: breaking news, chat</h2>
+
+<h2>Advanced: financial, games, collaboration</h2>
+</br>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small bullets incremental" ref="intro/slides/10">
+<h1>Have we done it before?</h1>
+
+<ul>
+<li>Flash</li>
+<li>ActiveX</li>
+<li>Server-Sent Events</li>
+<li>XHR long polling</li>
+<li>XHR streaming</li>
+<li>etc......</li>
+</ul>
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content small bullets incremental" ref="intro/slides/11">
+<h1>WebSocket Protocol</h1>
+
+<ul>
+<li><a href="http://tools.ietf.org/html/rfc6455">RFC 6455</a></li>
+<li>Finalized December 2011</li>
+</ul>
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content small bullets incremental" ref="intro/slides/12">
+<h1>"Web"Socket in a nutshell</h1>
+
+<ul>
+<li>HTTP handshake request</li>
+<li>Underlying TCP socket remains open</li>
+<li><strong>Bi-directional</strong> communication</li>
+<li>Thin layer over TCP --<br>split byte stream into messages</br>
+</li>
+
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small bullets incremental" ref="intro/slides/13">
+<h1>W3C WebSocket API</h1>
+
+<ul>
+<li>Candidate recommendation since Sep 2012</li>
+<li>Supported in most browsers</li>
+<li>Except on IE &lt; 10 !</li>
+<li>We'll come back to this (don't leave yet)</li>
+</ul>
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsection" ref="java/slides/1">
+<h1>WebSocket and Java</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small bullets incremental" ref="java/slides/2">
+<h1>JSR-356</h1>
+
+<ul>
+<li>WebSocket API for Java</li>
+<li>Spec completed May 2013 (part of Java 7)</li>
+<li>No Java EE 7 servers yet</li>
+<li>However Tomcat, Jetty support it</li>
+</ul>
+
+</div>
+</div><div class="slide" data-transition="none">
+  <div class="content small bullets incremental" ref="java/slides/3">
+<h1>Before JSR-356</h1>
+
+<ul>
+<li>Pre-existing support in Tomcat/Jetty/Caucho/Grizzly</li>
+<li>All complete re-writes after JSR-356</li>
+<li>jWebSocket -- higher level channels, events<br>built on Netty/Mina/Jetty/Tomcat</br>
+<li>Kaazing -- commercial,<br>higher-level messaging (JMS, AMQP, XMPP)</br>
+</li>
+
+</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small bullets incremental" ref="java/slides/4">
+<h1>After JSR-356</h1>
+
+<ul>
+<li>Convergance of APIs across Servlet containers</li>
+<li>Theoreticlaly not tied to Servlet API</li>
+<li>Will other servers implement it?</li>
+<li>What does it even mean<br>for higher level APIs (jWebSocket/Kaazing)?</br>
+</li>
+
+</ul>
+</div>
+</div><div class="slide" data-transition="none">
+  <div class="content small bullets incremental" ref="java/slides/5">
+<h1>Practically Speaking</h1>
+
+<ul>
+<li>JSR-356 will be in all Java 7 servers</li>
+<li>So it's important to a majority of developers</li>
+<li>Java ecosystem however is wider--<br>other WebSocket servers</br>
+<li>Also with higher level messaging<br>WebSocket APIs are not what apps use</br>
+</li>
+
+</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none">
+  <div class="content small bullets incremental" ref="java/slides/6">
+<h1>Current Status by Server</h1>
+
+<ul>
+<li>Tomcat 8 (at RC10) + backport to Tomcat 7.0.47+<br><em>(pre-existing Tomcat 7 support removed)</em></br>
+<li>Jetty 9 new (native) WebSocket implementation<br>Jetty 9.1 adds JSR-356 layer</br>
+<li>Glassfish 4 with Tyrus WebSocket engine</li>
+<li>WildFly/Undertow (currently 8.0 CR1)</li>
+</li>
+
+</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsection" ref="spring/slides/1">
+<h1>WebSocket and Spring</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small bullets incremental" ref="spring/slides/2">
+<h1>The Spring Value-Add</h1>
+
+<ul>
+<li>Spring configured JSR-356 endpoints</li>
+<li>Spring WebSocket API</li>
+<li>Fallback options</li>
+<li>Higher-level messaging support</li>
+</ul>
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content small bullets incremental" ref="spring/slides/3">
+<h1>Spring Config for JSR-356</h1>
+
+<ul>
+<li>Basically use JSR-356 API</li>
+<li>Declare endpoints in Spring config<br><em>(skip JSR-356 container scan)</em></br>
+<li>Singleton / per-session instance endpoint lifecycle</li>
+<li>Client-side auto startup mode</li>
+</li>
+
+</ul>
+</div>
+</div><div class="slide" data-transition="none">
+  <div class="content small center" ref="spring/slides/4">
+<h1>Demo</h1>
+
+<br>
+
+
+<h2><a href="https://github.com/rstoyanchev/spring-websocket-test">https://github.com/rstoyanchev/</a></h2>
+
+<h2><a href="https://github.com/rstoyanchev/spring-websocket-test">spring-websocket-test</a></h2>
+
+<br>
+
+
+<h2>Switch to <strong>"endpoint"</strong> branch</h2>
+</br>
+</br>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small bullets incremental" ref="spring/slides/5">
+<h1>Spring WebSocket API</h1>
+
+<ul>
+<li>Adapts to JSR-356 runtime (extends to others)</li>
+<li>A foundation for Spring's own use</li>
+<li>We view it as a low level building block</li>
+<li>Customizable, well-integrated with Spring MVC</li>
+</ul>
+
+</div>
+</div><div class="slide" data-transition="none">
+  <div class="content small center" ref="spring/slides/6">
+<h1>Demo</h1>
+
+<br>
+
+
+<h2><a href="https://github.com/rstoyanchev/spring-websocket-test">https://github.com/rstoyanchev/</a></h2>
+
+<h2><a href="https://github.com/rstoyanchev/spring-websocket-test">spring-websocket-test</a></h2>
+
+<br>
+
+
+<h2><strong>"master"</strong> branch</h2>
+</br>
+</br>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small bullets incremental" ref="spring/slides/7">
+<h1>Fallback Options</h1>
+
+<ul>
+<li>Emulate the WebSocket API (as close as possible)</li>
+<li>Various transport options underneath</li>
+<li>For where WebSocket isn't supported (IE &lt; 10)</li>
+<li>... or is <a href="http://www.infoq.com/articles/Web-Sockets-Proxy-Servers">precluded by network proxies</a></li>
+</ul>
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content small bullets incremental" ref="spring/slides/8">
+<h1>SockJS</h1>
+
+<ul>
+<li>A lightweight <a href="https://github.com/sockjs/sockjs-protocol">protocol</a> specified with <a href="http://sockjs.github.io/sockjs-protocol/sockjs-protocol-0.3.3.html">python test suite</a></li>
+<li>Browser JavaScript <a href="https://github.com/sockjs/sockjs-client">client</a> provided</li>
+<li>Wide range of <a href="https://github.com/sockjs/sockjs-client">server implementations</a> available</li>
+<li>Now also supported in <code>spring-websocket</code></li>
+</ul>
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content small center" ref="spring/slides/9">
+<h1>SockJS Transports</h1>
+
+<br>
+
+
+<p><img src="./file/spring/sockjs-transports.png" alt="SockJS Transports by Browser"/></p>
+</br>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small bullets incremental" ref="spring/slides/10">
+<h1>Using SockJS in Spring</h1>
+
+<ul>
+<li>A matter for configuration change</li>
+<li>Code remains the same</li>
+<li>sockjs-client in the browser</li>
+<li>Essential for any public facing application</li>
+</ul>
+
+</div>
+</div><div class="slide" data-transition="none">
+  <div class="content small center" ref="spring/slides/11">
+<h1>Demo</h1>
+
+<br>
+
+
+<h2><a href="https://github.com/rstoyanchev/spring-websocket-test">https://github.com/</a></h2>
+
+<h2><a href="https://github.com/rstoyanchev/spring-websocket-test">rstoyanchev/spring-websocket-test</a></h2>
+
+<br>
+
+
+<h2><strong>"master"</strong> branch</h2>
+</br>
+</br>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsection" ref="messaging/slides/1">
+<h1>Building<br>WebSocket-Style Applications</br>
+</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small" ref="messaging/slides/2">
+<h2>Using a WebSocket API directly is a bit like</h2>
+
+<h2>writing a <strong>custom Servlet</strong> application</h2>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small" ref="messaging/slides/3">
+<h2>Except the WebSocket protocol is</h2>
+
+<h2>on lower level than HTTP</h2>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small center" ref="messaging/slides/4">
+<h1>WebSocket vs HTTP</h1>
+
+<br>
+
+
+<p><img src="./file/messaging/websocket-http.png" alt="WebSocket vs HTTP"/></p>
+</br>
+</div>
+</div><div class="slide" data-transition="none">
+  <div class="content" ref="messaging/slides/5">
+<p> <blockquote>"The basic issue is there isn't enough information in an incoming websocket message for the container to know where to route it if there are multiple methods where it may land."</blockquote></p>
+
+<br><br>
+
+
+<p>Danny Coward, <strong>JSR-356 lead</strong><br>In <a href="https://java.net/projects/websocket-spec/lists/users/archive/2013-03/message/69">response to question</a> on user mailing list</br>
+</p>
+</br>
+</br></div>
+</div><div class="slide" data-transition="none">
+  <div class="content small bullets incremental" ref="messaging/slides/6">
+<h1>Using WebSocket API</h1>
+
+<h2>(Doable but leads to...)</h2>
+
+<br><br>
+
+
+<ul>
+<li>One WebSocket handler for entire app!</li>
+<li>Custom message formats</li>
+<li>Big if-else loop to interpret messages</li>
+<li>Essentially your own framework (+ client-side)</li>
+</ul>
+
+</br>
+</br>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="messaging/slides/7">
+
+
+<blockquote>"The subprotocol attribute of the handshake might serve as a useful place to attach this kind of message description/meta data, or some JSR356 specific headers in the handshake. Of course, the other issue is that the other end is often javascript, which would need to participate in some way in such a scheme."</blockquote>
+
+
+
+
+<blockquote>"These are all things we'll likely look at in the next version."</blockquote>
+
+
+<p>From next <a href="https://java.net/projects/websocket-spec/lists/users/archive/2013-03/message/72">reply</a> on same thread</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small bullets incremental" ref="messaging/slides/8">
+<h1>Sub-protocols</h1>
+
+<ul>
+<li>WebSocket defines <a href="http://tools.ietf.org/html/rfc6455#section-1.9">sub-protocol</a> mechanism</li>
+<li>Essentially use higher-level messaging protocol</li>
+<li>Either way you've to choose message format:<br>custom, standard, or framework-specific</br>
+<li>... and clients are impacted by this choice</li>
+</li>
+
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small center" ref="messaging/slides/9">
+<h2>Messaging Sub-protocol Examples:</h2>
+
+<br>
+
+
+<h2>JMS, AMQP, XMPP, STOMP, MQTT, VNC, ...</h2>
+</br>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small bullets incremental" ref="messaging/slides/10">
+<h1>Use Message Broker?</h1>
+
+<ul>
+<li>Actually yes, RabbitMQ, ActiveMQ, many others</li>
+<li>... support sending messages over WebSocket</li>
+<li>directly from the browser</li>
+<li>RabbitMQ also supports SockJS</li>
+</ul>
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content small center" ref="messaging/slides/11">
+<h1>Using Message Broker</h1>
+
+<p><img src="./file/messaging/broker-application.png" alt="Message Broker-First Scenario"/></p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small bullets incremental" ref="messaging/slides/12">
+<h1>Why <strong>Do</strong> It?</h1>
+
+<ul>
+<li>Messaging is a hard problem</li>
+<li>Brokers have been doing it for a long time</li>
+<li>Scalale, robust, configurable, monitaring</li>
+<li>No need to re-invent the wheel</li>
+</ul>
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content small bullets incremental" ref="messaging/slides/13">
+<h1>Why <strong>Not Do</strong> It?</h1>
+
+<ul>
+<li>Message brokers never been used over the web</li>
+<li>We already have a Web application server</li>
+<li>Need web framework centric programming model</li>
+<li>Something that feels familiar to web devs</li>
+</ul>
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content small bullets incremental" ref="messaging/slides/14">
+<h1><a href="http://stomp.github.io/">STOMP</a></h1>
+
+<ul>
+<li>Commonly supported in message brokers</li>
+<li>Simple messaging protocol</li>
+<li>Frames modelled on HTTP</li>
+<li>Well suited for use over the Web</li>
+</ul>
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller center" ref="messaging/slides/15">
+<h1>STOMP Frame</h1>
+
+<br>
+
+
+<p><img src="./file/messaging/stomp-frame-content.png" alt="STOMP Frame Content"/></p>
+</br>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller bullets incremental" ref="messaging/slides/16">
+<h1><code>"Destination"</code> Header</h1>
+
+<ul>
+<li>Opaque string, syntax left to server</li>
+<li>Typically path-like URIs (<code>"/queue/a"</code>, <code>"/topic/a"</code>)</li>
+<li>Message brokers choose the semantics</li>
+</ul>
+
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller center" ref="messaging/slides/17">
+<h1>Example</h1>
+
+<h2>Client Sends Message</h2>
+
+<br>
+
+
+<p><img src="./file/messaging/send-frame.png" alt="SEND frame"/></p>
+</br>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller center" ref="messaging/slides/18">
+<h1>Example</h1>
+
+<h2>Client Subscribes To Receive Messages</h2>
+
+<br>
+
+
+<p><img src="./file/messaging/subscribe-frame.png" alt="SUBSCRIBE frame"/></p>
+</br>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller center" ref="messaging/slides/19">
+<h1>Example</h1>
+
+<h2>Client Receives Message</h2>
+
+<br>
+
+
+<p><img src="./file/messaging/message-frame.png" alt="MESSAGE frame"/></p>
+</br>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller bullets incremental" ref="messaging/slides/20">
+<h1>What STOMP Gives Us...</h1>
+
+<ul>
+<li>A message format .. <em>check!</em></li>
+<li>Client library like <a href="https://github.com/jmesnil/stomp-websocket">stomp.js</a> .. <em>check!</em></li>
+<li>Higher-level messaging protocol .. <em>check!</em></li>
+<li>Good progress everyone (0 lines of code)</li>
+</ul>
+
+</div>
+</div><div class="slide" data-transition="none">
+  <div class="content smaller center" ref="messaging/slides/21">
+<h1>STOMP Over WebSocket</h1>
+
+<h2>Spring Framework 4</h2>
+
+<br><br>
+
+
+<p><img src="./file/messaging/application-broker.png" alt="Application-First Scenario"/></p>
+</br>
+</br>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smaller" ref="messaging/slides/22">
+<h1>Example Controller</h1>
+
+<br>
+
+
+<pre class="sh_java"><code>
+@Controller
+public class GreetingController {
+
+
+  @MessageMapping("/greetings")
+  public String greet(String greeting) {
+
+      // Return value broadcast to "/topic/greetings"
+
+      return "[" + getTimestamp() + "]: " + greeting;
+  }
+
+
+}</code></pre>
+</br>
+</div>
+</div><div class="slide" data-transition="none">
+  <div class="content smaller center" ref="messaging/slides/23">
+<h1>The Big Picture</h1>
+
+<h2>with Simple Built-in Broker</h2>
+
+<br><br>
+
+
+<p><img src="./file/messaging/simple-broker.png" alt="Simple Broker"/></p>
+</br>
+</br>
+</div>
+</div><div class="slide" data-transition="none">
+  <div class="content smaller center" ref="messaging/slides/24">
+<h1>The Big Picture</h1>
+
+<h2>with Message Broker</h2>
+
+<br><br>
+
+
+<p><img src="./file/messaging/message-broker.png" alt="Message Broker"/></p>
+</br>
+</br>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small center" ref="messaging/slides/25">
+<h1>Demo</h1>
+
+<br>
+
+
+<h2><a href="https://github.com/rstoyanchev/spring-websocket-portfolio">https://github.com/</a></h2>
+
+<h2><a href="https://github.com/rstoyanchev/spring-websocket-portfolio">rstoyanchev/spring-websocket-portfolio</a></h2>
+</br>
+</div>
+</div><div class="slide" data-transition="none">
+  <div class="content small" ref="end/slides/1">
+<h1>Much More To Check Out</h1>
+
+<br><br>
+
+
+<h2><a href="http://docs.spring.io/spring-framework/docs/current/spring-framework-reference/html/websocket.html">Reference documentation</a></h2>
+
+<br>
+
+
+<h2><a href="github.com/rstoyanchev/spring-websocket-portfolio">Portfolio Sample</a></h2>
+
+<br>
+
+
+<h2>Spring Exchange video podcasts:</h2>
+
+<h2><a href="http://skillsmatter.com/podcast/java-jee/intro-to-websocket-with-spring-framework-4-0">part 1</a> and <a href="http://skillsmatter.com/podcast/java-jee/building-websocket-browser-applications-with-spring">part 2</a></h2>
+</br>
+</br>
+</br></br></div>
+</div><div class="slide" data-transition="none">
+  <div class="content small" ref="end/slides/2">
+<h1>This Presentation</h1>
+
+<br><br>
+
+
+<h2><a href="http://github.com/rstoyanchev/nycjava-meetup-2014">http://github.com/rstoyanchev/</a></h2>
+
+<h2><a href="http://github.com/rstoyanchev/nycjava-meetup-2014">nycjava-meetup-2014</a></h2>
+</br>
+</br>
+</div>
+</div><div class="slide" data-transition="none">
+  <div class="content subsection" ref="end/slides/3">
+<h1>Find us on Twitter</h1>
+
+<br><br>
+
+
+<h2><a href="http://twitter.com/springframework">@springframework</a></h2>
+
+<h2><a href="http://twitter.com/rstoya05">@rstoya05</a></h2>
+</br>
+</br>
+</div>
+</div></div>
+
+</body>
+</html>
